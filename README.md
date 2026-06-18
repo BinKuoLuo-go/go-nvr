@@ -48,7 +48,7 @@ source ~/.bashrc
 # 验证CMake配置结果
 cmake --version
 
-# 2、克隆源码
+# 克隆源码
 # 拉取
 git clone --branch v1.24.1 --depth 1 --recursive https://github.com/microsoft/onnxruntime onnxruntime_1.24.1
 
