@@ -1,0 +1,25 @@
+# 设置自启动
+[Unit]
+Description=FRP Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/frp_proxy/frp_0.67.0_linux_amd64
+ExecStart=/home/frp_proxy/frp_0.67.0_linux_amd64/frps -c /home/frp_proxy/frp_0.67.0_linux_amd64/frps.toml
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+
+# 开机自启
+sudo systemctl enable frps
+
+# 启动，停止服务，查看状态，日志
+sudo systemctl start frps      # 启动
+sudo systemctl stop frps       # 停止
+sudo systemctl restart frps    # 重启
+sudo systemctl status frps     # 状态
+sudo journalctl -u frps -f     # 查看日志

@@ -1,0 +1,4 @@
+secret_key: go-nvr-2026-fangyao-secret # 签名密钥
+expire_days: 3650 # 授权天数
+license_file: license.txt # 授权文件
+company: 平顶山市东鑫焦化有限责任公司 # 需授权公司名

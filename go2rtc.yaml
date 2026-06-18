@@ -1,0 +1,51 @@
+api:
+  listen: ":1984"
+
+rtsp:
+  listen: ":8554"
+  transport: tcp
+
+webrtc:
+  listen: ":8555"
+
+
+
+log:
+  level: warn
+# 日志
+#log:
+#  level: info  # default level
+#  api: trace
+#  exec: debug
+#  rtsp: warn
+#  streams: error
+#  webrtc: fatal
+
+
+
+# 请在这下面添加摄像头的rtsp地址
+streams:
+#   hikvision_cam20: rtsp://admin:sdsc2026@192.168.1.20:554/Streaming/Channels/102
+   #usb_camera: ffmpeg:device?video=1080P USB Camera#video=h264
+  #支持双向音频
+#  hikvision_cam240:
+#    - rtsp://admin:1234abcd@192.168.1.240:554/Streaming/Channels/102
+#    - rtsp://admin:1234abcd@192.168.1.240/Streaming/Channels/102#backchannel=0
+  # 多路流配置(主码流+子码流)
+#  hikvision_cam4:
+#    - rtsp://admin:1234abcd@192.168.1.4:554/Streaming/Channels/101 # 主码流
+#    - rtsp://admin:1234abcd@192.168.1.4:554/Streaming/Channels/102 # 子码流
+#   hikvision_cam106: rtsp://admin:sc123456@192.168.1.106:554/Streaming/Channels/102
+#   hikvision_cam4: rtsp://admin:1234abcd@192.168.1.4:554/Streaming/Channels/102
+   #hikvision_cam105: rtsp://admin:1234abcd@192.168.1.105:554/Streaming/Channels/102
+#   hikvision_cam30: rtsp://admin:@SCFangyao@192.168.1.30:554/Streaming/Channels/102
+#  # hikvision_cam31: rtsp://admin:sdsc2026@192.168.1.31:554/Streaming/Channels/102
+#   hikvision_cam32: rtsp://admin:sdsc2026@192.168.1.32:554/Streaming/Channels/102
+#   hikvision_cam5: rtsp://admin:1234abcd@192.168.1.5:554/Streaming/Channels/102
+#   hikvision_cam33: rtsp://admin:sdsc2026@192.168.1.33:554//Streaming/Channels/102
+   carGuanFront_ockzr4_1: ffmpeg:E:/FyProject/Go/porject/go-nvr/testVide/carGuanFront_ockzr4_1.mp4#video=h264#audio=copy#loop#re
+   GBack_025yhi_1: ffmpeg:E:/FyProject/Go/porject/go-nvr/testVide/GGBack_025yhi_1.mp4#video=h264#audio=copy#loop#re
+   head_gx47j6_1: ffmpeg:E:/FyProject/Go/porject/go-nvr/testVide/head_gx47j6_1.mp4#video=h264#audio=copy#loop#re
+   north_wvy6d5_1: ffmpeg:E:/FyProject/Go/porject/go-nvr/testVide/north_wvy6d5_1.mp4#video=h264#audio=copy#loop#re
+   southBack_apmluw_1: ffmpeg:E:/FyProject/Go/porject/go-nvr/testVide/southBack_apmluw_1.mp4#video=h264#audio=copy#loop#re
+   west_vv6gel_1: ffmpeg:E:/FyProject/Go/porject/go-nvr/testVide/west_vv6gel_1.mp4#video=h264#audio=copy#loop#re

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package analysis;
+option go_package = "go-nvr/pkg/grpc/protos;protos";
+option py_generic_services = true;
+
+// 推理请求
+message InferRequest {
+  bytes image_data = 1;
+  int32 width = 2;
+  int32 height = 3;
+  float conf_threshold = 4;
+  float nms_threshold = 5;
+  string model_type = 6;
+}
+
+// 检测框
+message BoundingBox {
+  string label = 1;
+  float confidence = 2;
+  float x1 = 3;
+  float y1 = 4;
+  float x2 = 5;
+  float y2 = 6;
+}
+
+// 推理响应
+message InferResponse {
+  repeated BoundingBox boxes = 1;
+}
+
+// 推理服务
+service InferService {
+  rpc Infer(InferRequest) returns (InferResponse);
+}

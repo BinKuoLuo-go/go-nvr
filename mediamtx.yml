@@ -1,0 +1,150 @@
+logLevel: error                                          # 日志等级: debug/info/warn/error
+logDestinations: [stdout]    # 日志输出: 控制台和文件 [stdout, file]
+logFile: ./mediamtx_debug.log      # 日志文件路径
+logStructured: no                  # 日志是否结构化
+readTimeout: 10s                   # 读取超时
+writeTimeout: 10s                  # 写入超时
+writeQueueSize: 512                # 写队列大小
+udpMaxPayloadSize: 1472            # UDP 最大负载
+udpReadBufferSize: 0               # UDP 缓冲区大小
+
+# 认证设置
+authMethod: internal               # 内部用户认证
+authInternalUsers:
+  - user: any
+    pass:
+    ips: []
+    permissions:                   # 权限列表
+      - action: publish            # 发布流
+      - action: read               # 读取流
+      - action: playback           # 回放流
+  - user: any
+    pass:
+    ips: ['127.0.0.1', '::1']     # 仅允许本机访问
+    permissions:
+      - action: api                # API权限
+      - action: metrics            # Metrics权限
+      - action: pprof              # pprof性能分析权限
+authHTTPExclude:
+  - action: api
+  - action: metrics
+  - action: pprof
+authJWTInHTTPQuery: true           # 允许JWT通过HTTP Query传递
+authJWTClaimKey: mediamtx_permissions  # JWT权限键
+
+# API 控制接口 Control API
+api: yes                           # 启用API
+apiAddress: :9997                  # 绑定端口
+apiEncryption: no                  # 不启用加密
+apiAllowOrigins: ['*']             # 跨域允许所有
+
+# Metrics
+metrics: no                        # 不启用指标收集
+metricsAddress: :9998              # 指标端口
+
+# PPROF
+pprof: no                          # 不启用pprof
+pprofAddress: :9999                # pprof端口
+
+# 播放服务器 Playback server
+playback: no
+playbackAddress: :9996
+
+# RTSP服务器 RTSP server
+rtsp: yes                          # 启用RTSP
+rtspTransports: [tcp]              # 仅TCP，避免UDP端口冲突
+rtspAddress: :8557                 # RTSP端口
+rtspsAddress: :8322                # RTSPs端口
+rtpAddress: :8000                  # RTP端口
+rtcpAddress: :8001                 # RTCP端口
+multicastIPRange: 224.1.0.0/16     # 多播IP范围
+multicastRTPPort: 8002             # 多播RTP端口
+multicastRTCPPort: 8003            # 多播RTCP端口
+srtpAddress: :8004                  # SRTP端口
+srtcpAddress: :8005                 # SRTCP端口
+multicastSRTPPort: 8006
+multicastSRTCPPort: 8007
+rtspServerKey: server.key          # RTSP证书key
+rtspServerCert: server.crt         # RTSP证书crt
+rtspAuthMethods: [basic]           # RTSP认证方式
+
+# RTMP服务器
+rtmp: no                           # 禁用RTMP，避免占用1935端口
+rtmpAddress: :1935
+
+# HLS服务器
+hls: no                            # 禁用HLS，避免占用8888端口
+hlsAddress: :8888
+
+# WebRTC服务器
+webrtc: no                         # 禁用WebRTC，避免占用8889端口
+webrtcAddress: :8889
+webrtcLocalUDPAddress: :8189       # 本地UDP端口
+
+# SRT服务器
+srt: no                            # 禁用SRT，避免占用8890端口
+srtAddress: :8890
+
+# 默认路径设置
+pathDefaults:
+  sourceOnDemand: false             # 禁止按需拉流，始终拉取
+  maxReaders: 10                    # 最大读取者数量
+  record: no                        # 默认关闭录制，由代码动态开启
+  recordPath: H:/recordings/%path/%Y-%m-%d_%H-%M-%S-%f  # 录像路径
+  recordFormat: fmp4                # 分片MP4格式
+  recordPartDuration: 30s           # 单个分片时长
+  recordDeleteAfter: 72h            # 自动删除72小时以前的录像
+
+
+
+
+# 请注意: 上面的配置不用动，只需要在下面完成配置go2rtc.yaml里面的配置的对应流即可
+#按照如下格式：
+#  流名称:
+#    source: rtsp://localhost:8554/流名称
+# 流配置
+paths:
+  usb_camera:
+    source: rtsp://localhost:8554/usb_camera
+#
+#  hikvision_cam105:
+#    source: rtsp://localhost:8554/hikvision_cam105
+#
+#  hikvision_cam106:
+#    source: rtsp://localhost:8554/hikvision_cam106
+#
+#  hikvision_cam5:
+#    source: rtsp://localhost:8554/hikvision_cam5
+
+#  hikvision_cam4:
+#    source: rtsp://localhost:8554/hikvision_cam4
+#
+##  hikvision_cam240:
+##    source: rtsp://localhost:8554/hikvision_cam240
+#
+#  hikvision_cam106:
+#    source: rtsp://localhost:8554/hikvision_cam106
+#
+#  hikvision_cam5:
+#    source: rtsp://localhost:8554/hikvision_cam5
+#
+#  hikvision_cam105:
+#    source: rtsp://localhost:8554/hikvision_cam105
+
+  carGuanFront_ockzr4_1:
+    source: rtsp://localhost:8554/carGuanFront_ockzr4_1
+
+  GGBack_025yhi_1:
+    source: rtsp://localhost:8554/GGBack_025yhi_1
+
+  head_gx47j6_1:
+    source: rtsp://localhost:8554/head_gx47j6_1
+
+  north_wvy6d5_1:
+    source: rtsp://localhost:8554/north_wvy6d5_1
+
+  southBack_apmluw_1:
+    source: rtsp://localhost:8554/southBack_apmluw_1
+
+  west_vv6gel_1:
+    source: rtsp://localhost:8554/west_vv6gel_1

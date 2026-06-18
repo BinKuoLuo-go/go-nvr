@@ -1,0 +1,18 @@
+# 排除模型文件
+onnxModel/
+pkg/bin/
+# Go编译产物
+*.exe
+# 日志/临时文件
+logs/
+# IDE配置
+.idea/
+# Go模块缓存
+vendor/
+# dist前端构建产物
+static/dist
+recordings/
+update/
+*.log
+testVide/
+*.json

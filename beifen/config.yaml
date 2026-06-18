@@ -1,0 +1,146 @@
+system:
+  # 设定模式(debug/release/test,正式版改为release)
+  mode: release
+  # url前缀
+  url-path-prefix:
+  # 程序监听IP
+  host: "127.0.0.1"
+  # 程序监听端口
+  port: 8811
+  # 是否启用模型分析
+  isAnalysis: true
+  # 是否启用AI录制 （加这个主要是业务可能只需要分析不需要单独在录制，应为录制的话有硬盘录像机） 注意如果是 ffmpeg-resize: true则保持这个为false,如果 ffmpeg-resize: false则可以开启这个ai录制
+  enableRecording: false
+  # 是否启用PLC（true=启用，false=禁用）
+  isStartOPlc: false
+  # 快照保存位置
+  snapshotRootPath: G:/update
+  # 录像保存位置
+  recordingRootPath: G:/recordings
+  # true=开发模式=源码路径.本地开发 | false=程序执行目录编译后的程序,打包发布 ,请注意，统一用这个！ (用于找和加载bin/目录)
+  devMode: true
+  # 定时任务
+  task:
+    # 快照图片保留天数
+    snapshot-retention-days: 2
+    # 告警录像保留天数
+    record-retention-days: 2
+    # 定时任务：0 0 0 * * *每天凌晨0点执行
+    cron-expression: "0 0 0 * * *"
+
+
+
+logs:
+  # 日志等级(-1:Debug, 0:Info, 1:Warn, 2:Error, 3:DPanic, 4:Panic, 5:Fatal, -1<=level<=5, 参照zap.level源码)
+  level: 1
+  # 日志路径
+  path: logs
+  # 文件最大大小, M
+  max-size: 50
+  # 备份数
+  max-backups: 10
+  # 存放时间, 天
+  max-age: 10
+  # 是否压缩
+  compress: true
+
+
+database:
+  # 数据库类型 mysql sqlite3
+  driver: sqlite3
+
+
+# SQLite配置
+sqlite:
+  # SQLite数据库文件路径
+  path: ./nvrs.db
+  # 是否打印SQL调试日志
+  log-mode: true
+
+mysql:
+  # 用户名
+  username: root
+  # 密码
+  password: admin123
+  # 数据库名
+  database: gonvr
+  # 主机地址
+  host: 127.0.0.1
+  # 端口
+  port: 3306
+  # 连接字符串参数
+  query: parseTime=True&loc=Local&timeout=10000ms
+  # 是否打印日志
+  log-mode: true
+  # 数据库表前缀(无需再末尾添加下划线, 程序内部自动处理)
+  table-prefix: tb
+  # 编码方式
+  charset: utf8mb4
+  # 字符集(utf8mb4_general_ci速度比utf8mb4_unicode_ci快些)
+  collation: utf8mb4_general_ci
+
+
+
+# plc配置
+plc:
+  ip: "192.168.1.2"
+  rack: 0 # 机架
+  slot: 1  # 插槽
+
+# ONNX配置
+onnx:
+  # true启用gpu推理 false则cpu推理  cuda12.x
+  use-cuda: true
+  # (模型的执行环境和状态)Session数量, 即同一时刻允许并发几个推理任务执行,根据设备情况决定，我认为4就足够了，不是越大越好
+  max-concurrency: 8
+  # FFmpegResize=true 则用ffmpeg缩放；false则读取原始分辨率然后用 nfnt/resize 缩放
+  ffmpeg-resize: false
+  # 每多少帧检测一次
+  frame-count: 3
+  # 置信度
+  confidence: 0.55
+  # 非极大值抑制阈值，防止目标漏检
+  nms-threshold: 0.5
+  # 使用的模型
+  default-model: "yolo-v8n"
+  # filter=先推理再判断roi | crop=先裁剪roi再推理  就用filter吧感觉好点
+  roi-detect-mode: "filter"
+  base:
+    # 输入节点名
+    input-name: "images"
+    # 输出节点名
+    output-name: "output0"
+  models:
+    yolo-v8n:
+      model-path: "./onnxModel/yolov8n.onnx"  # 模型路径
+      input-shape: [ 1, 3, 640, 640 ] # 输入形状
+      output-shape: [ 1, 84, 8400 ]  # 输出形状
+    yolo-v8n-320:
+      model-path: "./onnxModel/yolov8n_320.onnx"  # 模型路径
+      input-shape: [ 1, 3, 320, 320 ] # 输入形状
+      output-shape: [ 1, 84, 2100 ]  # 输出形状
+
+    yolo-v11n:
+      model-path: "./onnxModel/yolo11n.onnx"  # 模型路径
+      input-shape: [ 1, 3, 640, 640 ] # 输入形状
+      output-shape: [ 1, 84, 8400 ]  # 输出形状
+
+    yolo-v11s:
+      model-path: "./onnxModel/yolo11s.onnx"  # 模型路径
+      input-shape: [ 1, 3, 640, 640 ] # 输入形状
+      output-shape: [ 1, 84, 8400 ]  # 输出形状
+
+    yolo-v11x:
+      model-path: "./onnxModel/yolo11x.onnx"  # 模型路径
+      input-shape: [ 1, 3, 640, 640 ] # 输入形状
+      output-shape: [ 1, 84, 8400 ]  # 输出形状
+
+    yolo-v12s:
+      model-path: "./onnxModel/yolo12s.onnx"  # 模型路径
+      input-shape: [ 1, 3, 640, 640 ] # 输入形状
+      output-shape: [ 1, 84, 8400 ]  # 输出形状
+
+
+
+
+
