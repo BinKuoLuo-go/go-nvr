@@ -25,13 +25,19 @@
 ## 注意
 + 就是如果是win系统的话，onnxruntime_go库你需要开启CGO和下载配置编译器,我下是mingw64，还有就是cuda版本，我的是12.x左右的
 
-先这样吧后续我在详细写写
+## 食用教程
++ 1.拉取源码后在pkg包下放入bin包以及在项目根目录放入onnxModel文件(因为上传大小限制，可加我qq3526232030,我发你)
++ 2.前端代码采用react,将build后的dist放在static目录下，go run main.go运行后，直接打开127.0.0.1:8000即可访问前端
+
+
+
+
 
 
 ## jetson设备编译onnxruntime
 ```bash
 
-# 1、配置 CMake
+# 配置 CMake
 # 下载适配Jetson的aarch64架构CMake 3.29.0
 wget https://github.com/Kitware/CMake/releases/download/v3.29.0/cmake-3.29.0-linux-aarch64.tar.gz
 
